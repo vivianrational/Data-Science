@@ -1,0 +1,33 @@
+---
+title: "Combine_Excels"
+author: "Vivian"
+date: "04/04/2020"
+output: html_document
+---
+```{r}
+options(rpubs.upload.method = 'internal') 
+readCSV <- function(data_path){
+  file_list <- list.files(data_path,full.names=T)
+  # display  a character vector of the names of files or directories in the named directory.
+  Save_func <- function(x){
+    table_x <- read.csv(file=x,sep=",",header = T)
+  }
+  a<-invisible(lapply(file_list,FUN=Save_func))
+  #invisible return values which can be assigned, but which do not print when they are not assigned
+  #lappy returns a list of the same length as file_list accoring to our function Save_func
+  b<-as.data.frame(a[[1]])
+  for (i in 2:length(a)){
+    c<-rbind(b,a[[i]])
+    b <- c
+  }
+  return(b)
+}
+```
+
+##### This is an example, you could combine several excel files in one excel.
+```{r}
+# dir_dta <- "your data path"
+# result <-readCSV(dir_dta)
+# write.csv(result,file = "which path you want to save")
+```
+
